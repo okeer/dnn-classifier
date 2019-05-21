@@ -40,6 +40,21 @@ class LayerTest(unittest.TestCase):
 
         np.testing.assert_array_almost_equal(relu_activation_assert, activation)
 
+    def test_givenSigmoidLayer_whenBackward_shouldCalculateSlope(self):
+        self.__init_test_layer(SigmoidLayer)
+        classes = np.array([[1, 1, 1],
+                            [1, 1, 1]])
+
+        activation = self.layer.forward(self.features)
+
+        d_activation = (np.divide(classes, activation) - np.divide(1 - classes, 1 - activation))
+        d_act_prev = self.layer.backward(d_activation)
+
+        print(d_activation)
+        print(d_act_prev)
+
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()

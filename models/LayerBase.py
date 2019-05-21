@@ -11,6 +11,9 @@ class LayerBase(object):
         self.pre_activation = None
         self.activation = None
         self.activation_previous = None
+        self.d_weight = None
+        self.d_bias = None
+        self.d_activation_previous = None
 
     def __if_params_not_initialized(self):
         return (self.weights is None) or (self.bias is None)
@@ -29,5 +32,12 @@ class LayerBase(object):
     def forward(self, activation_from_previous_layer):
         self.__forward_linear(activation_from_previous_layer)
 
-    def backward(self):
-        pass
+    def __backward_linear(self, d_pre_activation):
+        m = self.activation_previous.shape[1]
+
+        self.d_weight = 1. / m * np.dot(d_pre_activation, self.activation_previous.T)
+        self.d_bias = 1. / m * np.sum(d_pre_activation, axis=1, keepdims=True)
+        self.d_activation_previous = np.dot(self.weights.T, d_pre_activation)
+
+    def backward(self, d_pre_activation):
+        self.__backward_linear(d_pre_activation)
