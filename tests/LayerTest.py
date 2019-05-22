@@ -17,7 +17,8 @@ class LayerTest(unittest.TestCase):
         self.__init_test_layer(LayerBase)
         pre_activation_assrt = np.array([[1.2, 1.4, 1.75], [0.7, 0.6, 0.6]])
 
-        self.layer._LayerBase__forward_linear(self.features)
+        self.layer.activation = self.features
+        self.layer._LayerBase__forward_linear()
 
         self.assertEqual(True, isinstance(self.layer.pre_activation, np.ndarray))
         np.testing.assert_array_almost_equal(pre_activation_assrt, self.layer.pre_activation)
@@ -41,14 +42,18 @@ class LayerTest(unittest.TestCase):
         np.testing.assert_array_almost_equal(relu_activation_assert, activation)
 
     def test_givenSigmoidLayer_whenBackward_shouldCalculateSlope(self):
-        self.__init_test_layer(SigmoidLayer)
-        classes = np.array([[1, 1, 1],
-                            [1, 1, 1]])
+        self.layer = SigmoidLayer(2, lambda x: x)
+        np.random.seed(1)
+        d_activation = np.random.randn(1, 2)
+        self.layer.activation = np.random.randn(3, 2)
+        self.layer.weights = np.random.randn(1, 3)
+        self.layer.bias = np.random.randn(1, 1)
+        self.layer.pre_activation = np.random.randn(1, 2)
+        d_activation_from_prev = np.array([[0.12624794, -0.04703764],
+                                           [-0.09867912, 0.03676601],
+                                           [0.57857522, -0.2155664]])
 
-        activation = self.layer.forward(self.features)
-
-        d_activation = (np.divide(classes, activation) - np.divide(1 - classes, 1 - activation))
-        d_act_prev = self.layer.backward(d_activation)
+        np.testing.assert_array_almost_equal(d_activation_from_prev, self.layer.backward(d_activation))
 
     def test_givenSigmoidLayer_whenUpdate_shouldUpdateParameters(self):
         self.__init_test_layer(SigmoidLayer)
