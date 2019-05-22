@@ -12,12 +12,12 @@ class NeuralNetwork(object):
     def __forward_propagation(self, features):
         self.propagation_features = features
 
-        for index in range(self.layers_count - 1):
+        for index in range(self.layers_count):
             self.propagation_features = self.layers[index].forward(self.propagation_features)
 
     def __backward_propagation(self, classes):
-        d_activation = (np.divide(classes, self.propagation_features) - np.divide(1 - classes, 1 - self.propagation_features))
-        for index in reversed(range(len(self.layers) - 1)):
+        d_activation = - (np.divide(classes, self.propagation_features) - np.divide(1 - classes, 1 - self.propagation_features))
+        for index in reversed(range(len(self.layers))):
             d_activation = self.layers[index].backward(d_activation)
             self.layers[index].update(self.learning_rate)
 
