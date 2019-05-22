@@ -37,6 +37,18 @@ class NeuralNetworkTest(unittest.TestCase):
 
         self.assertEqual(predictions.shape[1], self.train_features.shape[1])
 
+    def test_givenDataset_whenPredict_shouldMeet70PercAccuracy(self):
+        layers = [ReluLayer(5, relu), ReluLayer(5, relu), SigmoidLayer(1, sigmoid)]
+
+        nn = NeuralNetwork(layers)
+
+        nn.train(self.train_features, self.train_classes)
+
+        predictions = nn.predict(self.train_features)
+
+        prediction_accuracy = 100 - np.mean(np.abs(predictions - self.train_classes)) * 100
+        self.assertGreaterEqual(prediction_accuracy, 70.0)
+
 
 if __name__ == '__main__':
     unittest.main()
