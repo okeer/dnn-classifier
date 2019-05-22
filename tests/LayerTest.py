@@ -38,7 +38,6 @@ class LayerTest(unittest.TestCase):
                                            [0.7, 0.6, 0.6]])
 
         activation = self.layer.forward(self.features)
-        print(self.layer.pre_activation)
 
         np.testing.assert_array_almost_equal(relu_activation_assert, activation)
 
@@ -83,7 +82,6 @@ class LayerTest(unittest.TestCase):
                                                [-0.2298228, 0.]])
 
         d_activation_from_prev = self.layer.backward(d_activation)
-        print(d_activation_from_prev)
 
         np.testing.assert_array_almost_equal(d_activation_from_prev_vrf, d_activation_from_prev)
 

@@ -47,6 +47,7 @@ class NeuralNetworkTest(unittest.TestCase):
         predictions = nn.predict(self.train_features)
 
         prediction_accuracy = 100 - np.mean(np.abs(predictions - self.train_classes)) * 100
+        print("Prediction accuracy is {0}%".format(prediction_accuracy))
         self.assertGreaterEqual(prediction_accuracy, 70.0)
 
 
