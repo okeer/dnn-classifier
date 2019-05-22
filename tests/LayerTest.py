@@ -34,10 +34,11 @@ class LayerTest(unittest.TestCase):
 
     def test_givenReluLayer_whenForward_shouldCalculateActivation(self):
         self.__init_test_layer(ReluLayer)
-        relu_activation_assert = np.array([[1, 1, 1],
-                                           [1, 1, 1]])
+        relu_activation_assert = np.array([[1.2, 1.4, 1.75],
+                                           [0.7, 0.6, 0.6]])
 
         activation = self.layer.forward(self.features)
+        print(self.layer.pre_activation)
 
         np.testing.assert_array_almost_equal(relu_activation_assert, activation)
 
@@ -68,6 +69,23 @@ class LayerTest(unittest.TestCase):
 
         np.testing.assert_array_almost_equal(result_weight, self.layer.weights)
         np.testing.assert_array_almost_equal(result_bias, self.layer.bias)
+
+    def test_givenReluLayer_whenBackward_ShouldCalculateSlope(self):
+        self.layer = ReluLayer(2, lambda x: x)
+        np.random.seed(2)
+        d_activation = np.random.randn(1, 2)
+        self.layer.activation = np.random.randn(3, 2)
+        self.layer.weights = np.random.randn(1, 3)
+        self.layer.bias = np.random.randn(1, 1)
+        self.layer.pre_activation = np.random.randn(1, 2)
+        d_activation_from_prev_vrf = np.array([[0.44090989, -0.],
+                                               [0.37883606, -0.],
+                                               [-0.2298228, 0.]])
+
+        d_activation_from_prev = self.layer.backward(d_activation)
+        print(d_activation_from_prev)
+
+        np.testing.assert_array_almost_equal(d_activation_from_prev_vrf, d_activation_from_prev)
 
 
 if __name__ == '__main__':
