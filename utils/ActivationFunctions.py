@@ -6,4 +6,4 @@ def sigmoid(pre_activation):
 
 
 def relu(pre_activation):
-    return (pre_activation > 0.5).astype(int)
+    return np.maximum(0, pre_activation)
