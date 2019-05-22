@@ -29,7 +29,7 @@ class NeuralNetworkTest(unittest.TestCase):
 
         layers = [hidden, out]
 
-        nn = NeuralNetwork(layers)
+        nn = NeuralNetwork(layers, 0.09, 1)
 
         nn.train(self.train_features, self.train_classes)
 
@@ -38,9 +38,9 @@ class NeuralNetworkTest(unittest.TestCase):
         self.assertEqual(predictions.shape[1], self.train_features.shape[1])
 
     def test_givenDataset_whenPredict_shouldMeet70PercAccuracy(self):
-        layers = [ReluLayer(5, relu), ReluLayer(5, relu), SigmoidLayer(1, sigmoid)]
+        layers = [ReluLayer(20, relu), ReluLayer(7, relu), ReluLayer(5, relu), SigmoidLayer(1, sigmoid)]
 
-        nn = NeuralNetwork(layers)
+        nn = NeuralNetwork(layers, 0.0075, 3000)
 
         nn.train(self.train_features, self.train_classes)
 
