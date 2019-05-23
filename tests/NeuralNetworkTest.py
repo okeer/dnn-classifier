@@ -1,5 +1,6 @@
-import unittest
 import os
+import pickle
+import unittest
 
 from ActivationFunctions import sigmoid, relu
 from NeuralNetwork import NeuralNetwork
@@ -43,6 +44,16 @@ class NeuralNetworkTest(unittest.TestCase):
         nn = NeuralNetwork(layers, 0.0075, 3000)
 
         nn.train(self.train_features, self.train_classes)
+
+        predictions = nn.predict(self.train_features)
+
+        prediction_accuracy = 100 - np.mean(np.abs(predictions - self.train_classes)) * 100
+        print("Prediction accuracy is {0}%".format(prediction_accuracy))
+        self.assertGreaterEqual(prediction_accuracy, 70.0)
+
+    def test_givenFile_whenDeserialize_shouldReturnValidModel(self):
+        file = open(os.environ["MODEL"], "rb")
+        nn = pickle.load(file)
 
         predictions = nn.predict(self.train_features)
 
