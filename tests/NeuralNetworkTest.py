@@ -52,14 +52,24 @@ class NeuralNetworkTest(unittest.TestCase):
         self.assertGreaterEqual(prediction_accuracy, 70.0)
 
     def test_givenFile_whenDeserialize_shouldReturnValidModel(self):
-        file = open(os.environ["MODEL"], "rb")
-        nn = pickle.load(file)
+        with open(os.environ["MODEL"], "rb") as file:
+            nn = pickle.load(file)
 
-        predictions = nn.predict(self.train_features)
+            predictions = nn.predict(self.train_features)
 
-        prediction_accuracy = 100 - np.mean(np.abs(predictions - self.train_classes)) * 100
-        print("Prediction accuracy is {0}%".format(prediction_accuracy))
-        self.assertGreaterEqual(prediction_accuracy, 70.0)
+            prediction_accuracy = 100 - np.mean(np.abs(predictions - self.train_classes)) * 100
+            print("Prediction accuracy is {0}%".format(prediction_accuracy))
+            self.assertGreaterEqual(prediction_accuracy, 70.0)
+
+    def test_giveSerializedModel_whenDeserialize_shouldProcessTestSetWithSufficientAccuracy(self):
+        with open(os.environ["MODEL"], "rb") as file:
+            nn = pickle.load(file)
+
+            predictions = nn.predict(self.test_features)
+
+            prediction_accuracy = 100 - np.mean(np.abs(predictions - self.test_classes)) * 100
+            print("Prediction accuracy is {0}%".format(prediction_accuracy))
+            self.assertGreaterEqual(prediction_accuracy, 70.0)
 
 
 if __name__ == '__main__':
