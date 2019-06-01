@@ -1,6 +1,6 @@
 import h5py
 import numpy as np
-from scipy.misc import imread, imresize
+from PIL import Image
 
 
 def load_dataset(filename, features_and_classes_names):
@@ -16,7 +16,8 @@ def load_dataset(filename, features_and_classes_names):
 
 
 def image_to_np_array(file, height_pixels, width_pixels):
-    image = np.array(imread(file, flatten=False))
-    resized_image_array = imresize(image, size=(height_pixels, width_pixels)).reshape(
-        (1, height_pixels * width_pixels * 3)).T
-    return resized_image_array
+    with Image.open(file) as img:
+        resized_img = img.resize((height_pixels, width_pixels))
+        resized_img.load()
+        return np.asarray(resized_img, dtype="int32").reshape(
+            (1, height_pixels * width_pixels * 3)).T
