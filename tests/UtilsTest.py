@@ -12,6 +12,13 @@ class UtilsTest(unittest.TestCase):
         self.assertEqual(isinstance(features, np.ndarray), True)
         self.assertEqual(isinstance(classes, np.ndarray), True)
 
+    def test_givenImage_whenConvertingImageToNP_shouldReturnValidFeatureVector(self):
+        filename = os.environ['cat_image']
+        print(filename)
+        with open(filename, 'rb') as image_file:
+            image_array = image_to_np_array(image_file, 300, 300)
+            self.assertEqual((270000, 1), image_array.shape)
+
 
 if __name__ == '__main__':
     unittest.main()
