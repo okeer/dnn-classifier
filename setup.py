@@ -17,7 +17,7 @@ setup(name='dnn-classifier',
       license='MIT',
       packages=find_packages(include=['dnn*']),
       install_requires=[
-          'h5py', 'numpy'
+          'h5py', 'numpy', 'scipy'
       ],
       include_package_data=True,
       zip_safe=False)
