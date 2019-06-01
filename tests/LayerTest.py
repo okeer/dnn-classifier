@@ -1,9 +1,9 @@
 import unittest
-import numpy as np
 
-from ReluLayer import ReluLayer
-from SigmoidLayer import SigmoidLayer
-from models.LayerBase import LayerBase
+from layers.LayerBase import LayerBase
+from layers.ReluLayer import ReluLayer
+from layers.SigmoidLayer import SigmoidLayer
+from utils.ActivationFunctions import *
 
 
 class LayerTest(unittest.TestCase):

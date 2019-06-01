@@ -1,7 +1,7 @@
 import numpy as np
 
-from ActivationFunctions import relu
-from LayerBase import LayerBase
+from dnnclassifier.layers.LayerBase import LayerBase
+from dnnclassifier.utils.ActivationFunctions import relu
 
 
 class ReluLayer(LayerBase):

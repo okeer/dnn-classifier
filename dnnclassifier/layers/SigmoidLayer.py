@@ -1,5 +1,5 @@
-from ActivationFunctions import sigmoid
-from LayerBase import LayerBase
+from dnnclassifier.layers.LayerBase import LayerBase
+from dnnclassifier.utils.ActivationFunctions import sigmoid
 
 
 class SigmoidLayer(LayerBase):
