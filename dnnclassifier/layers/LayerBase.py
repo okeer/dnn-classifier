@@ -19,7 +19,8 @@ class LayerBase(object):
         return (self.weights is None) or (self.bias is None)
 
     def __init_parameters(self, size_of_previous_layer):
-        self.weights = np.random.randn(self.current_layer_dim, size_of_previous_layer) / np.sqrt(size_of_previous_layer)
+        self.weights = np.random.randn(self.current_layer_dim, size_of_previous_layer) \
+                       * np.sqrt(2. / size_of_previous_layer)
         self.bias = np.zeros((self.current_layer_dim, 1))
 
     def __forward_linear(self):
