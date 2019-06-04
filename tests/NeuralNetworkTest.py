@@ -42,7 +42,7 @@ class NeuralNetworkTest(unittest.TestCase):
 
         nn = NeuralNetwork(layers, 0.009, 3000)
 
-        nn.train(self.train_features, self.train_classes)
+        nn.train(self.train_features, self.train_classes, chunk_size=100)
 
         with open(os.environ["MODEL"], "wb") as file:
             pickle.dump(nn, file)
