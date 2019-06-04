@@ -53,20 +53,6 @@ class LayerTest(unittest.TestCase):
 
         np.testing.assert_array_almost_equal(d_activation_from_prev, self.layer.backward(d_activation))
 
-    def test_givenSigmoidLayer_whenUpdate_shouldUpdateParameters(self):
-        self.__init_test_layer(LayerBase, SigmoidFunc)
-        self.layer.d_weights = np.array([[0.005, 0.003], [0.001, 0.002]])
-        self.layer.d_bias = np.array([[0.05], [0.03]])
-        result_weight = np.array([[0.49955, 0.29973],
-                                  [0.09991, 0.19982]])
-        result_bias = np.array([[0.0955],
-                                [0.1973]])
-
-        self.layer.update(0.09)
-
-        np.testing.assert_array_almost_equal(result_weight, self.layer.weights)
-        np.testing.assert_array_almost_equal(result_bias, self.layer.bias)
-
     def test_givenReluLayer_whenBackward_ShouldCalculateSlope(self):
         self.layer = LayerBase(2, ReluFunc)
         np.random.seed(2)

@@ -6,6 +6,7 @@ from dnnclassifier.NeuralNetwork import NeuralNetwork
 from dnnclassifier.layers.LayerBase import *
 from dnnclassifier.utils.ActivationFunctions import *
 from dnnclassifier.utils.DataLoader import *
+from utils.optimizers import BaseOptimizer
 
 
 class NeuralNetworkTest(unittest.TestCase):
@@ -29,7 +30,7 @@ class NeuralNetworkTest(unittest.TestCase):
 
         layers = [hidden, out]
 
-        nn = NeuralNetwork(layers, 0.09, 1)
+        nn = NeuralNetwork(layers, 1, BaseOptimizer(learning_rate=0.09))
 
         nn.train(self.train_features, self.train_classes)
 
@@ -40,7 +41,7 @@ class NeuralNetworkTest(unittest.TestCase):
     def test__givenDataset_whenPredict_shouldMeet70PercAccuracy(self):
         layers = [LayerBase(20, ReluFunc), LayerBase(7, ReluFunc), LayerBase(5, ReluFunc), LayerBase(1, SigmoidFunc)]
 
-        nn = NeuralNetwork(layers, 0.009, 3000)
+        nn = NeuralNetwork(layers, 3000, BaseOptimizer(learning_rate=0.009))
 
         nn.train(self.train_features, self.train_classes, chunk_size=100)
 

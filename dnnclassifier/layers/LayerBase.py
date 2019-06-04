@@ -47,6 +47,9 @@ class LayerBase(object):
         self.__backward_linear(dZ)
         return self.d_activation
 
-    def update(self, learning_rate):
-        self.weights -= learning_rate * self.d_weights
-        self.bias -= learning_rate * self.d_bias
+    def get_parameters_slope(self):
+        return self.d_weights, self.d_bias
+
+    def update_parameters(self, delta_weights, delta_bias):
+        self.weights -= delta_weights
+        self.bias -= delta_bias

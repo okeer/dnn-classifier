@@ -4,12 +4,12 @@ from dnnclassifier.utils.ShuffledDataset import ShuffledDataset
 
 
 class NeuralNetwork(object):
-    def __init__(self, layers, learning_rate, iterations):
+    def __init__(self, layers, iterations, optimizer):
         self.layers = layers
         self.layers_count = len(self.layers)
         self.propagation_features = None
-        self.learning_rate = learning_rate
         self.iterations = iterations
+        self.opt = optimizer
 
     def __forward_propagation(self, features):
         self.propagation_features = features
@@ -22,7 +22,9 @@ class NeuralNetwork(object):
                                                                                     1 - self.propagation_features))
         for index in reversed(range(len(self.layers))):
             d_activation = self.layers[index].backward(d_activation)
-            self.layers[index].update(self.learning_rate)
+            d_params = self.layers[index].get_parameters_slope()
+            d_weights, d_bias = self.opt.compute_update(self.layers[index], d_params)
+            self.layers[index].update_parameters(d_weights, d_bias)
 
     def __compute_loss(self, activation_layer, classes):
         m = classes.shape[1]
