@@ -22,6 +22,11 @@ class NeuralNetwork(object):
             d_activation = self.layers[index].backward(d_activation)
             self.layers[index].update(self.learning_rate)
 
+    def __compute_loss(self, activation_layer, classes):
+        m = classes.shape[1]
+        return 1. / m * np.nansum(
+            np.multiply(-np.log(activation_layer), classes) + np.multiply(-np.log(1 - activation_layer), 1 - classes))
+
     def train(self, features, classes, chunk_size=None):
         if chunk_size is not None and chunk_size > classes.shape[1]:
             raise Exception("Chunk size should be less than number of examples")
@@ -40,6 +45,9 @@ class NeuralNetwork(object):
             for index in range(len(X_chunks)):
                 self.__forward_propagation(X_chunks[index])
                 self.__backward_propagation(Y_chunks[index])
+
+            if epoch % 100 == 0:
+                print(f"Epoch {epoch} loss is {self.__compute_loss(self.propagation_features, Y_chunks[index])}")
 
     def predict(self, features):
         self.__forward_propagation(features)
