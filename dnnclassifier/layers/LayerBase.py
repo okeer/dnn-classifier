@@ -32,6 +32,8 @@ class LayerBase(object):
     def forward(self, activation):
         self.activation = activation
         self.__forward_linear()
+        self.activation_layer = self.activation_func.forward(self.pre_activation)
+        return self.activation_layer
 
     def __backward_linear(self, d_pre_activation):
         m = self.activation.shape[1]
@@ -40,8 +42,10 @@ class LayerBase(object):
         self.d_bias = 1. / m * np.sum(d_pre_activation, axis=1, keepdims=True)
         self.d_activation = np.dot(self.weights.T, d_pre_activation)
 
-    def backward(self, d_pre_activation):
-        self.__backward_linear(d_pre_activation)
+    def backward(self, dA):
+        dZ = self.activation_func.backward(self.pre_activation, dA)
+        self.__backward_linear(dZ)
+        return self.d_activation
 
     def update(self, learning_rate):
         self.weights -= learning_rate * self.d_weights

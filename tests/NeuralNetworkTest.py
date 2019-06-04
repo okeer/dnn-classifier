@@ -3,8 +3,7 @@ import pickle
 import unittest
 
 from dnnclassifier.NeuralNetwork import NeuralNetwork
-from dnnclassifier.layers.ReluLayer import ReluLayer
-from dnnclassifier.layers.SigmoidLayer import SigmoidLayer
+from dnnclassifier.layers.LayerBase import *
 from dnnclassifier.utils.ActivationFunctions import *
 from dnnclassifier.utils.DataLoader import *
 
@@ -25,8 +24,8 @@ class NeuralNetworkTest(unittest.TestCase):
         self.__read_test_set()
 
     def test_givenDataset_whenPredict_shouldReturnClasses(self):
-        hidden = ReluLayer(2, sigmoid)
-        out = SigmoidLayer(1, relu)
+        hidden = LayerBase(2, ReluFunc)
+        out = LayerBase(1, SigmoidFunc)
 
         layers = [hidden, out]
 
@@ -39,7 +38,7 @@ class NeuralNetworkTest(unittest.TestCase):
         self.assertEqual(predictions.shape[1], self.train_features.shape[1])
 
     def test__givenDataset_whenPredict_shouldMeet70PercAccuracy(self):
-        layers = [ReluLayer(20, relu), ReluLayer(7, relu), ReluLayer(5, relu), SigmoidLayer(1, sigmoid)]
+        layers = [LayerBase(20, ReluFunc), LayerBase(7, ReluFunc), LayerBase(5, ReluFunc), LayerBase(1, SigmoidFunc)]
 
         nn = NeuralNetwork(layers, 0.009, 3000)
 
