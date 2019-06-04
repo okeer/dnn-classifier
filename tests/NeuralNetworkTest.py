@@ -39,11 +39,15 @@ class NeuralNetworkTest(unittest.TestCase):
         self.assertEqual(predictions.shape[1], self.train_features.shape[1])
 
     def test__givenDataset_whenPredict_shouldMeet70PercAccuracy(self):
-        layers = [LayerBase(128, ReluFunc), LayerBase(64, ReluFunc), LayerBase(32, ReluFunc), LayerBase(1, SigmoidFunc)]
+        layers = [LayerBase(20, ReluFunc), LayerBase(16, ReluFunc), LayerBase(7, ReluFunc), LayerBase(3, ReluFunc),
+                  LayerBase(1, SigmoidFunc)]
 
-        nn = NeuralNetwork(layers, 3000, AdamOptimizer(learning_rate=0.001))
+        nn = NeuralNetwork(layers, 1000, AdamOptimizer(learning_rate=0.0075))
 
-        nn.train(self.train_features, self.train_classes, chunk_size=100)
+        nn.train(self.train_features, self.train_classes,
+                 cross_validation_features=self.test_features,
+                 cross_validation_classes=self.test_classes,
+                 chunk_size=100)
 
         with open(os.environ["MODEL"], "wb") as file:
             pickle.dump(nn, file)

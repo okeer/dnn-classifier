@@ -31,7 +31,7 @@ class NeuralNetwork(object):
         return 1. / m * np.nansum(
             np.multiply(-np.log(activation_layer), classes) + np.multiply(-np.log(1 - activation_layer), 1 - classes))
 
-    def train(self, features, classes, chunk_size=None):
+    def train(self, features, classes, cross_validation_features=None, cross_validation_classes=None, chunk_size=None):
         shuffled_dataset = ShuffledDataset(features, classes, chunk_size)
 
         for epoch in range(self.iterations):
@@ -43,8 +43,13 @@ class NeuralNetwork(object):
                 self.__forward_propagation(mini_X)
                 self.__backward_propagation(mini_Y)
 
-                if epoch % 100 == 0:
-                    print(f"Epoch {epoch} loss is {self.__compute_loss(self.propagation_features, mini_Y)}")
+            if epoch % 10 == 0:
+                print(f"Epoch {epoch} loss is {self.__compute_loss(self.propagation_features, mini_Y)}")
+
+                if cross_validation_features is not None and cross_validation_classes is not None:
+                    predictions = self.predict(cross_validation_features)
+                    accuracy = 100 - np.mean(np.abs(predictions - cross_validation_classes)) * 100
+                    print(f"Epoch {epoch} accuracy is {accuracy:.2f}")
 
     def predict(self, features):
         self.__forward_propagation(features)
