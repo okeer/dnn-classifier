@@ -1,7 +1,7 @@
 import unittest
 
-from layers.LayerBase import LayerBase
-from utils.ActivationFunctions import *
+from dnnclassifier.layers.LayerBase import LayerBase
+from dnnclassifier.utils.ActivationFunctions import *
 
 
 class LayerTest(unittest.TestCase):

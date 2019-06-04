@@ -6,7 +6,7 @@ from dnnclassifier.NeuralNetwork import NeuralNetwork
 from dnnclassifier.layers.LayerBase import *
 from dnnclassifier.utils.ActivationFunctions import *
 from dnnclassifier.utils.DataLoader import *
-from utils.optimizers import BaseOptimizer, AdamOptimizer
+from dnnclassifier.utils.optimizers import BaseOptimizer, AdamOptimizer
 
 
 class NeuralNetworkTest(unittest.TestCase):
