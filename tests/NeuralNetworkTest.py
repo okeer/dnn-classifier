@@ -6,7 +6,7 @@ from dnnclassifier.NeuralNetwork import NeuralNetwork
 from dnnclassifier.layers.LayerBase import *
 from dnnclassifier.utils.ActivationFunctions import *
 from dnnclassifier.utils.DataLoader import *
-from utils.optimizers import BaseOptimizer
+from utils.optimizers import BaseOptimizer, AdamOptimizer
 
 
 class NeuralNetworkTest(unittest.TestCase):
@@ -39,9 +39,9 @@ class NeuralNetworkTest(unittest.TestCase):
         self.assertEqual(predictions.shape[1], self.train_features.shape[1])
 
     def test__givenDataset_whenPredict_shouldMeet70PercAccuracy(self):
-        layers = [LayerBase(20, ReluFunc), LayerBase(7, ReluFunc), LayerBase(5, ReluFunc), LayerBase(1, SigmoidFunc)]
+        layers = [LayerBase(128, ReluFunc), LayerBase(64, ReluFunc), LayerBase(32, ReluFunc), LayerBase(1, SigmoidFunc)]
 
-        nn = NeuralNetwork(layers, 3000, BaseOptimizer(learning_rate=0.009))
+        nn = NeuralNetwork(layers, 3000, AdamOptimizer(learning_rate=0.001))
 
         nn.train(self.train_features, self.train_classes, chunk_size=100)
 

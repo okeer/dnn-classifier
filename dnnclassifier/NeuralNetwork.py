@@ -38,10 +38,12 @@ class NeuralNetwork(object):
             shuffled_dataset.shuffle()
             for minibatch in shuffled_dataset:
                 mini_X, mini_Y = minibatch
+                self.opt.notify_minibatch_started()
+
                 self.__forward_propagation(mini_X)
                 self.__backward_propagation(mini_Y)
 
-                if epoch % 500 == 0:
+                if epoch % 100 == 0:
                     print(f"Epoch {epoch} loss is {self.__compute_loss(self.propagation_features, mini_Y)}")
 
     def predict(self, features):
