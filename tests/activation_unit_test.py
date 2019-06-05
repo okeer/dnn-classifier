@@ -1,6 +1,6 @@
 import unittest
 
-from dnnclassifier.utils.ActivationFunctions import *
+from numdl.utils.activation import *
 
 
 class ActivationFuncTest(unittest.TestCase):

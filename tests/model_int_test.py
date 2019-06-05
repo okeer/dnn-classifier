@@ -2,11 +2,11 @@ import os
 import pickle
 import unittest
 
-from dnnclassifier.NeuralNetwork import NeuralNetwork
-from dnnclassifier.layers.LayerBase import *
-from dnnclassifier.utils.ActivationFunctions import *
-from dnnclassifier.utils.DataLoader import *
-from dnnclassifier.utils.optimizers import BaseOptimizer, AdamOptimizer
+from numdl.layers.base import *
+from numdl.nn.model import NeuralNetwork
+from numdl.utils.activation import *
+from numdl.utils.data import *
+from numdl.utils.optimizers import BaseOptimizer, AdamOptimizer
 
 
 class NeuralNetworkTest(unittest.TestCase):

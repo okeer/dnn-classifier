@@ -1,7 +1,7 @@
 import unittest
 
-from dnnclassifier.utils.ActivationFunctions import *
-from dnnclassifier.utils.optimizers import BaseOptimizer
+from numdl.utils.activation import *
+from numdl.utils.optimizers import BaseOptimizer
 
 
 class BaseOptimizerUnitTest(unittest.TestCase):

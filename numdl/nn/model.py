@@ -1,6 +1,6 @@
 import numpy as np
 
-from dnnclassifier.utils.ShuffledDataset import ShuffledDataset
+from numdl.utils.data import ShuffledDataset
 
 
 class NeuralNetwork(object):

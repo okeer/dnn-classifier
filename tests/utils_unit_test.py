@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from dnnclassifier.utils.DataLoader import *
+from numdl.utils.data import *
 
 
 class UtilsTest(unittest.TestCase):

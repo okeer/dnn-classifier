@@ -1,7 +1,7 @@
 import unittest
 
-from dnnclassifier.layers.LayerBase import LayerBase
-from dnnclassifier.utils.ActivationFunctions import *
+from numdl.layers.base import LayerBase
+from numdl.utils.activation import *
 
 
 class LayerTest(unittest.TestCase):
